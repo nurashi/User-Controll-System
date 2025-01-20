@@ -8,11 +8,11 @@
         <version>3.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>kz.nurashi</groupId>
-    <artifactId>colourApplication</artifactId>
+    <groupId>kz.applicationWeb</groupId>
+    <artifactId>UserControllSystemOOP</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>colourApplication</name>
-    <description>colourApplication</description>
+    <name>UserControllSystemOOP</name>
+    <description>UserControllSystemOOP</description>
     <url/>
     <licenses>
         <license/>

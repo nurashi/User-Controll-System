@@ -1,13 +1,13 @@
-package kz.applicationweb.usercontrollsystem;
+package kz.applicationweb.usercontrollsystemoop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UserControllSystemApplication {
+public class UserControllSystemOopApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UserControllSystemApplication.class, args);
+        SpringApplication.run(UserControllSystemOopApplication.class, args);
     }
 
 }
