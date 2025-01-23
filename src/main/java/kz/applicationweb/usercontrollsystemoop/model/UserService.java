@@ -3,8 +3,12 @@ package kz.applicationweb.usercontrollsystemoop.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PutMapping;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -37,15 +41,17 @@ public class UserService {
     }
 
 
+    @Transactional
     public void updateUser(Integer id,
                            String name,
                            String surname,
+                           int age,
                            String email,
                            String password,
                            String job,
                            String adress,
-                           String phone,
-                           int age) {
+                           String phone
+    ) {
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalStateException(
                         "user with id " + id + " does not exist"
                 ));
@@ -96,11 +102,12 @@ public class UserService {
             user.setPhone(phone);
         }
 
-        if (age > 0 &&
-                age != user.getAge()) {
-            user.setAge(age);
-        }
+//        if (dob != null &&
+//                !dob.equals(user.getDob())) {
+//            user.setDob(dob);
+//        }
 
         userRepository.save(user);
     }
+
 }

@@ -1,42 +1,52 @@
 package kz.applicationweb.usercontrollsystemoop.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
+
+import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
-@Table(name = "OOP_USER")
+// @Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "oop_users_FirstIteration")
 public class User {
 
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 255, nullable = false, name="name")
+    @Column(length = 255, nullable = false, name = "name")
     private String name;
 
-    @Column(length = 255, nullable = false, name="surname")
+    @Column(length = 255, nullable = false, name = "surname")
     private String surname;
 
-    @Column(length = 255, nullable = false, name="age")
+    @Column(length = 255, name = "age")
     private int age;
 
-    @Column(length = 255, nullable = false, name="email")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+//    @Column(length = 255, nullable = false, name = "dob")
+//    private LocalDate dob;
+
+
+    @Column(length = 255, name = "email")
     private String email;
 
-    @Column(length = 255, nullable = false, name="password")
+    @Column(length = 255, name = "password")
     private String password;
 
-    @Column(length = 255, nullable = false, name="job")
+    @Column(length = 255, name = "job")
     private String job;
 
-    @Column(length = 255, nullable = false, name="phone")
+    @Column(length = 255, name = "phone")
     private String phone;
 
-    @Column(length = 255, nullable = false, name="address")
+    @Column(length = 255, name = "address")
     private String address;
 
-    public User(){}
+    public User() {
+    }
 
     public User(String name,
                 String surname,
@@ -45,11 +55,11 @@ public class User {
                 String password,
                 String job,
                 String phone,
-                String address){
+                String address) {
         this.name = name;
         this.surname = surname;
-        this.age = age;
         this.email = email;
+        this.age = age;
         this.password = password;
         this.job = job;
         this.phone = phone;
@@ -64,6 +74,7 @@ public class User {
     public void setId(Integer id) {
         this.id = id;
     }
+
 
     public String getName() {
         return name;
@@ -81,13 +92,21 @@ public class User {
         this.surname = surname;
     }
 
+//    public void setAge() {
+//        this.age = calculateAge(dob);
+//    }
+
     public int getAge() {
         return age;
     }
+//    public LocalDate getDob() {
+//        return dob;
+//    }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
+//    public void setDob(LocalDate dob) {
+//        this.age = calculateAge(dob);
+//        this.dob = dob;
+//    }
 
     public String getEmail() {
         return email;
@@ -128,6 +147,12 @@ public class User {
     public void setAddress(String address) {
         this.address = address;
     }
+
+
+    public int calculateAge(LocalDate dob) {
+        return Period.between(dob, LocalDate.now()).getYears();
+    }
+
 
     @Override
     public String toString() {

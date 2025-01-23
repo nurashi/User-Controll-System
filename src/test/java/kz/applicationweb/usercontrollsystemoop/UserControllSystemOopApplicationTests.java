@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 
@@ -24,14 +25,14 @@ class UserControllSystemOopApplicationTests {
     @Test
     void contextLoads() {
         User user = new User();
-        user.setName("Aisha");
-        user.setSurname("Erbolat");
-        user.setAge(17);
-        user.setEmail("aisha.Erbolat@gmail.com");
-        user.setPassword("123123");
-        user.setJob("headman");
-        user.setPhone("72345678971");
-        user.setAddress("Astana, Kazakhstan");
+        user.setName("Rar");
+        user.setSurname("rer");
+        user.setEmail("rer.rar@gmail.com");
+        user.setDob(LocalDate.of(2005, 1, 20));
+        user.setPassword("qwe123");
+        user.setJob("reret");
+        user.setPhone("2312321");
+        user.setAddress("Sun, Galaxy");
         User savedUser = userRepository.save(user);
 
 
