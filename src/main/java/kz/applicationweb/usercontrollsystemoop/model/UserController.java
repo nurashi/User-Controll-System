@@ -34,23 +34,21 @@ public class UserController {
 
 
     @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable Integer userId){
-        userService.deleteUser(userId);
+    public void deleteUser(@PathVariable Integer id){
+        userService.deleteUser(id);
     }
 
 
-    @PutMapping("/users{id}")
-    public void updateUser(
-            @PathVariable Integer userId,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String surname,
-            @RequestParam(required = false) int age,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String password,
-            @RequestParam(required = false) String job,
-            @RequestParam(required = false) String address,
-            @RequestParam(required = false) String phone
-    ){
-        userService.updateUser(userId, name, surname, age, email, password, job, address, phone);
+    @PutMapping("/users/{id}")
+    public void updateUser(@PathVariable("id") Integer id, @RequestBody User user){
+        userService.updateUser(user.getId(), user.getName(), user.getSurname(), user.getAge(), user.getEmail(), user.getPassword(), user.getJob(), user.getPhone(), user.getAddress());
     }
+
+
+    @GetMapping("/users/search")
+    public List<User> searchUsers(@RequestParam(required = false) String name,
+                                  @RequestParam(required = false) String address) {
+        return userService.searchUsers(name, address);
+    }
+
 }
