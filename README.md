@@ -1,4 +1,7 @@
 # User-Controll-System
+
+![image](https://github.com/user-attachments/assets/0971f48a-da43-4d3d-be0f-cdbac7ebdd88)
+
 This project created for "Object-Oriented Programming. | Khaimuldin Askar" course. Focused on controlling Users from Database which is Postgres...
 
 
