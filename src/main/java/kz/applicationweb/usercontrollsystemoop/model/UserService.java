@@ -96,11 +96,13 @@ public class UserService {
             user.setPhone(phone);
         }
 
-        if (age > 0 &&
-                age != user.getAge()) {
-            user.setAge(age);
-        }
+
 
         userRepository.save(user);
+    }
+
+    public User findByUsernameAndPassword(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password)
+                .orElseThrow(() -> new RuntimeException("User not found with provided credentials"));
     }
 }

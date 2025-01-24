@@ -1,8 +1,14 @@
 package kz.applicationweb.usercontrollsystemoop.model;
 
 
+import io.jsonwebtoken.Jwts;
+import kz.applicationweb.usercontrollsystemoop.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
@@ -40,4 +46,19 @@ public class UserController {
     public void updateUser(Integer userId, String name, String surname, String email, String password, String job, String adress, String phone, int age){
         userService.updateUser(userId, name, surname, email, password, job, adress, phone, age);
     }
+
+
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
+        try {
+            User user = userService.findByUsernameAndPassword(username, password);
+            String token = JwtUtil.generateToken(user.getName(),user.isAdmin());
+
+            return ResponseEntity.ok("Login successful! Your token: " + token);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+
 }

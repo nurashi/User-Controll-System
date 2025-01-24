@@ -26,12 +26,12 @@ class UserControllSystemOopApplicationTests {
         User user = new User();
         user.setName("Aisha");
         user.setSurname("Erbolat");
-        user.setAge(17);
         user.setEmail("aisha.Erbolat@gmail.com");
         user.setPassword("123123");
         user.setJob("headman");
         user.setPhone("72345678971");
         user.setAddress("Astana, Kazakhstan");
+        user.setDob(2007);
         User savedUser = userRepository.save(user);
 
 
