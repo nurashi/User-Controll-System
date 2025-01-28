@@ -8,8 +8,7 @@ import java.time.LocalDate;
 import java.time.Period;
 
 @Entity
-// @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "oop_users_FirstIteration")
+
 public class User {
 
     @jakarta.persistence.Id
@@ -22,36 +21,12 @@ public class User {
     @Column(length = 255, nullable = false, name = "surname")
     private String surname;
 
-    @Column(length = 255, name = "age")
-    private int age;
-
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-//    @Column(length = 255, nullable = false, name = "dob")
-//    private LocalDate dob;
-
-
-    @Column(length = 255, name = "email")
-    private String email;
-
-    @Column(length = 255, name = "password")
-    private String password;
-
-    @Column(length = 255, name = "job")
-    private String job;
-
-    @Column(length = 255, name = "phone")
-    private String phone;
-
-    @Column(length = 255, name = "address")
-    private String address;
-
-    public User() {
     }
 
     public User(String name,
                 String surname,
-                int age,
                 String email,
+                LocalDate dob,
                 String password,
                 String job,
                 String phone,
@@ -59,11 +34,12 @@ public class User {
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.age = age;
+
         this.password = password;
         this.job = job;
         this.phone = phone;
         this.address = address;
+        isAdmin = false;
     }
 
 
@@ -92,12 +68,10 @@ public class User {
         this.surname = surname;
     }
 
-//    public void setAge() {
-//        this.age = calculateAge(dob);
-//    }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setDob(LocalDate dob) {
+        this.age = calculateAge(dob);
+        this.dob = dob;
     }
 
     public int getAge() {
