@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -33,32 +34,28 @@ public class UserController {
 
 
     @PostMapping("/users")
-    public void registerNewUser(User user){
+    public void registerNewUser(@RequestBody User user){
         userService.addNewUser(user);
     }
 
-    @DeleteMapping("/users")
-    public void deleteUser(Integer userId){
-        userService.deleteUser(userId);
-    }
 
-    @PutMapping("/users")
-    public void updateUser(Integer userId, String name, String surname, String email, String password, String job, String adress, String phone, int age){
-        userService.updateUser(userId, name, surname, email, password, job, adress, phone, age);
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable Integer id){
+        userService.deleteUser(id);
     }
 
 
-
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
-        try {
-            User user = userService.findByUsernameAndPassword(username, password);
-            String token = JwtUtil.generateToken(user.getName(),user.isAdmin());
-
-            return ResponseEntity.ok("Login successful! Your token: " + token);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        }
+    @PutMapping("/users/{id}")
+    public void updateUser(@PathVariable("id") Integer id, @RequestBody User user){
+        userService.updateUser(user.getId(), user.getName(), user.getSurname(), user.getAge(), user.getEmail(), user.getPassword(), user.getJob(), user.getPhone(), user.getAddress());
     }
+
+
+    @GetMapping("/users/search")
+    public List<User> searchUsers(@RequestParam(required = false) String name,
+                                  @RequestParam(required = false) String address) {
+        return userService.searchUsers(name, address);
+    }
+
 
 }

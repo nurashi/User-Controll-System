@@ -1,10 +1,15 @@
 package kz.applicationweb.usercontrollsystemoop.model;
 
 
+import kz.applicationweb.usercontrollsystemoop.model.validation.CustomValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PutMapping;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -21,13 +26,24 @@ public class UserService {
         return (List<User>) userRepository.findAll();
     }
 
-    public void addNewUser(User user){
-        Optional<User> userOptional = userRepository.findByEmail(user.getEmail());
-        if(userOptional.isPresent()){
-            throw new IllegalStateException("email taken");
+    public void addNewUser(User user) {
+        StringBuilder errorMessages = new StringBuilder();
+
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            errorMessages.append("Email is already taken. ");
         }
+
+        if (userRepository.findByPhone(user.getPhone()).isPresent()) {
+            errorMessages.append("Phone number is already taken. ");
+        }
+
+        if (errorMessages.length() > 0) {
+            throw new CustomValidationException(errorMessages.toString().trim());
+        }
+
         userRepository.save(user);
     }
+
 
     public void deleteUser(Integer userId) {
         if(!userRepository.existsById(userId)){
@@ -37,68 +53,45 @@ public class UserService {
     }
 
 
-    public void updateUser(Integer id,
-                           String name,
-                           String surname,
-                           String email,
-                           String password,
-                           String job,
-                           String adress,
-                           String phone,
-                           int age) {
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalStateException(
-                        "user with id " + id + " does not exist"
-                ));
+    public void updateUser(Integer id, String name, String surname, int age, String email, String password, String job, String phone, String address) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("User with ID " + id + " does not exist"));
 
-        if (name != null &&
-                name.length() > 0 &&
-                !name.equals(user.getName())) {
-            user.setName(name);
+        if (name != null && !name.isEmpty()) {
+            existingUser.setName(name);
         }
-
-        if (surname != null &&
-                surname.length() > 0 &&
-                !surname.equals(user.getSurname())) {
-            user.setSurname(surname);
+        if (surname != null && !surname.isEmpty()) {
+            existingUser.setSurname(surname);
         }
-
-        if (email != null &&
-                email.length() > 0 &&
-                !email.equals(user.getEmail())) {
+        if (age > 0) {
+            existingUser.setAge(age);
+        }
+        if (email != null && !email.isEmpty()) {
             Optional<User> userOptional = userRepository.findByEmail(email);
-            if(userOptional.isPresent()){
-                throw new IllegalStateException("email taken");
+            if (userOptional.isPresent() && !userOptional.get().getId().equals(id)) {
+                throw new IllegalStateException("Email is already taken");
             }
-            user.setEmail(email);
+            existingUser.setEmail(email);
         }
-
-        if (password != null &&
-                password.length() > 0 &&
-                !password.equals(user.getPassword())) {
-            user.setPassword(password);
+        if (password != null && !password.isEmpty()) {
+            existingUser.setPassword(password);
         }
-
-        if (job != null &&
-                job.length() > 0 &&
-                !job.equals(user.getJob())) {
-            user.setJob(job);
+        if (job != null && !job.isEmpty()) {
+            existingUser.setJob(job);
         }
-
-        if (adress != null &&
-                adress.length() > 0 &&
-                !adress.equals(user.getAddress())) {
-            user.setAddress(adress);
+        if (phone != null && !phone.isEmpty()) {
+            Optional<User> userWithPhone = userRepository.findByPhone(phone);
+            if (userWithPhone.isPresent() && !userWithPhone.get().getId().equals(id)) {
+                throw new IllegalStateException("Phone number is already taken");
+            }
+            existingUser.setPhone(phone);
         }
-
-        if (phone != null &&
-                phone.length() > 0 &&
-                !phone.equals(user.getPhone())) {
-            user.setPhone(phone);
+        if (address != null && !address.isEmpty()) {
+            existingUser.setAddress(address);
         }
 
 
-
-        userRepository.save(user);
+        return userRepository.searchUsersByNameOrAddress(name, address);
     }
 
     public User findByUsernameAndPassword(String username, String password) {
