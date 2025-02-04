@@ -90,12 +90,15 @@ public class UserService {
             existingUser.setAddress(address);
         }
 
-
-        return userRepository.searchUsersByNameOrAddress(name, address);
+        userRepository.save(existingUser);
     }
 
-    public User findByUsernameAndPassword(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, password)
-                .orElseThrow(() -> new RuntimeException("User not found with provided credentials"));
+
+    public List<User> searchUsers(String name, String address) {
+        if ((name == null || name.isEmpty()) && (address == null || address.isEmpty())) {
+            throw new IllegalArgumentException("at list one parameter should be provided");
+        }
+
+        return userRepository.searchUsersByNameOrAddress(name, address);
     }
 }

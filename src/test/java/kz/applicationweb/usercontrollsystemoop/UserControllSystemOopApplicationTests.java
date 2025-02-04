@@ -25,7 +25,14 @@ class UserControllSystemOopApplicationTests {
     @Test
     void contextLoads() {
         User user = new User();
-
+        user.setName("Rar");
+        user.setSurname("rer");
+        user.setEmail("rer.rar@gmail.com");
+        user.setDob(LocalDate.of(2005, 1, 20));
+        user.setPassword("qwe123");
+        user.setJob("reret");
+        user.setPhone("2312321");
+        user.setAddress("Sun, Galaxy");
         User savedUser = userRepository.save(user);
 
 
