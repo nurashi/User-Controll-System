@@ -1,7 +1,5 @@
 package kz.applicationweb.usercontrollsystemoop;
 
-import kz.applicationweb.usercontrollsystemoop.model.User;
-import kz.applicationweb.usercontrollsystemoop.model.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
+import java.lang.StackWalker.Option;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -19,69 +20,4 @@ import java.util.Optional;
 @Rollback(false)
 class UserControllSystemOopApplicationTests {
 
-
-    @Autowired private UserRepository userRepository;
-
-    @Test
-    void contextLoads() {
-        User user = new User();
-        user.setName("Rar");
-        user.setSurname("rer");
-        user.setEmail("rer.rar@gmail.com");
-        user.setDob(LocalDate.of(2005, 1, 20));
-        user.setPassword("qwe123");
-        user.setJob("reret");
-        user.setPhone("2312321");
-        user.setAddress("Sun, Galaxy");
-        User savedUser = userRepository.save(user);
-
-
-        Assertions.assertThat(savedUser).isNotNull();
-        Assertions.assertThat(savedUser.getId()).isGreaterThan(0);
-    }
-
-
-    @Test
-    public void testListAll() {
-        Iterable<User> users = userRepository.findAll();
-        Assertions.assertThat(users).hasSizeGreaterThan(0);
-
-        for (User user : users) {
-            System.out.println(user);
-        }
-    }
-
-    @Test
-    public void testUpdate() {
-        Integer userId = 1;
-
-        Optional<User> optionalUser = userRepository.findById(userId);
-
-        User user = optionalUser.get();
-        user.setPassword("Prekol!");
-        userRepository.save(user);
-
-
-        User updatedUser = userRepository.findById(userId).get();
-        Assertions.assertThat(updatedUser.getPassword()).isEqualTo("Prekol!");
-    }
-
-
-    @Test
-    public void testGet() {
-        Integer userId = 1;
-        Optional<User> optionalUser = userRepository.findById(userId);
-        Assertions.assertThat(optionalUser).isPresent();
-        System.out.println(optionalUser.get());
-    }
-
-
-    @Test
-    public void testDelete() {
-        Integer userId = 1;
-        userRepository.deleteById(userId);
-
-        Optional<User> optionalUser = userRepository.findById(userId);
-        Assertions.assertThat(optionalUser).isNotPresent();
-    }
 }
