@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kz.applicationweb.usercontrollsystemoop.dto.response.TaskStatusResponse;
 import kz.applicationweb.usercontrollsystemoop.repository.TaskStatusRepository;
+import kz.applicationweb.usercontrollsystemoop.security.RequireRole;
 
 @RestController
 @RequestMapping("/api/task-statuses")
@@ -23,6 +24,7 @@ public class TaskStatusController {
     }
 
     @GetMapping
+    @RequireRole({"admin", "employee"})
     public List<TaskStatusResponse> getAllTaskstatuses() {
         return taskStatusRepository.findAll()
                 .stream()

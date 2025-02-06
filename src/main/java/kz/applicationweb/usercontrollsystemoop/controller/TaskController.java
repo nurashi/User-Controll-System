@@ -44,7 +44,16 @@ public class TaskController {
 
     @GetMapping
     public List<TaskResponse> getAllTasks() {
-        return taskRepository.findAll()
+        return taskRepository.findAllWithStatus()
+                .stream()
+                .map(TaskResponse::new)
+                .toList();
+    }
+
+    @GetMapping("/by-employee/{id}")
+    @RequireRole({"admin", "employee"})
+    public List<TaskResponse> getTasksByEmployee(@PathVariable Long id) {
+        return taskRepository.findByEmployeeIdWithStatus(id)
                 .stream()
                 .map(TaskResponse::new)
                 .toList();
