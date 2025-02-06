@@ -7,18 +7,18 @@ import jakarta.transaction.Transactional;
 import kz.applicationweb.usercontrollsystemoop.dto.request.CreateStudentRequest;
 import kz.applicationweb.usercontrollsystemoop.model.user.Student;
 import kz.applicationweb.usercontrollsystemoop.repository.StudentRepository;
-import kz.applicationweb.usercontrollsystemoop.service.IStudentService;
+import kz.applicationweb.usercontrollsystemoop.service.StudentService;
 import kz.applicationweb.usercontrollsystemoop.util.MappingUtils;
 
 @Service
 @Transactional
-public class StudentService implements IStudentService {
+public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository StudentRepository;
     private final MappingUtils mappingUtils;
 
     @Autowired
-    public StudentService(StudentRepository StudentRepository,
+    public StudentServiceImpl(StudentRepository StudentRepository,
                               MappingUtils mappingUtils) {
         this.StudentRepository = StudentRepository;
         this.mappingUtils = mappingUtils;

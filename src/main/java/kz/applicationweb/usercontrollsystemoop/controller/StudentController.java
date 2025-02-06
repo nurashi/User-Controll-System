@@ -12,18 +12,18 @@ import kz.applicationweb.usercontrollsystemoop.dto.request.CreateStudentRequest;
 import kz.applicationweb.usercontrollsystemoop.dto.response.StudentResponse;
 import kz.applicationweb.usercontrollsystemoop.model.user.Student;
 import kz.applicationweb.usercontrollsystemoop.repository.StudentRepository;
-import kz.applicationweb.usercontrollsystemoop.service.impl.StudentService;
+import kz.applicationweb.usercontrollsystemoop.service.impl.StudentServiceImpl;
 
 @RestController
 @RequestMapping("/api/students")
 public class StudentController {
     
     private final StudentRepository studentRepository;
-    private final StudentService studentService;
+    private final StudentServiceImpl studentService;
 
     @Autowired
     public StudentController(StudentRepository studentRepository, 
-                             StudentService studentService) {
+                             StudentServiceImpl studentService) {
         this.studentRepository = studentRepository;
         this.studentService = studentService;
     }

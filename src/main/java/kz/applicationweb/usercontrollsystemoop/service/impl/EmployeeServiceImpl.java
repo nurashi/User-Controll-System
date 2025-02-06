@@ -7,18 +7,18 @@ import jakarta.transaction.Transactional;
 import kz.applicationweb.usercontrollsystemoop.dto.request.CreateEmployeeRequest;
 import kz.applicationweb.usercontrollsystemoop.model.user.Employee;
 import kz.applicationweb.usercontrollsystemoop.repository.EmployeeRepository;
-import kz.applicationweb.usercontrollsystemoop.service.IEmployeeService;
+import kz.applicationweb.usercontrollsystemoop.service.EmployeeService;
 import kz.applicationweb.usercontrollsystemoop.util.MappingUtils;
 
 @Service
 @Transactional
-public class EmployeeService implements IEmployeeService {
+public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final MappingUtils mappingUtils;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository,
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository,
                               MappingUtils mappingUtils) {
         this.employeeRepository = employeeRepository;
         this.mappingUtils = mappingUtils;

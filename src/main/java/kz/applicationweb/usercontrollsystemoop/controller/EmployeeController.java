@@ -12,18 +12,18 @@ import kz.applicationweb.usercontrollsystemoop.dto.request.CreateEmployeeRequest
 import kz.applicationweb.usercontrollsystemoop.dto.response.EmployeeResponse;
 import kz.applicationweb.usercontrollsystemoop.model.user.Employee;
 import kz.applicationweb.usercontrollsystemoop.repository.EmployeeRepository;
-import kz.applicationweb.usercontrollsystemoop.service.impl.EmployeeService;
+import kz.applicationweb.usercontrollsystemoop.service.impl.EmployeeServiceImpl;
 
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
     
     private final EmployeeRepository employeeRepository;
-    private final EmployeeService employeeService;
+    private final EmployeeServiceImpl employeeService;
 
     @Autowired
     public EmployeeController(EmployeeRepository employeeRepository, 
-                             EmployeeService employeeService) {
+                             EmployeeServiceImpl employeeService) {
         this.employeeRepository = employeeRepository;
         this.employeeService = employeeService;
     }
