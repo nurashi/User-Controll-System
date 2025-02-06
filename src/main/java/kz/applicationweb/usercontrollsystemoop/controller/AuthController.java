@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import kz.applicationweb.usercontrollsystemoop.dto.request.AuthRequest;
 import kz.applicationweb.usercontrollsystemoop.dto.request.RegisterRequest;
@@ -14,6 +15,7 @@ import kz.applicationweb.usercontrollsystemoop.util.UserFactory;
 
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "Auth")
 public class AuthController {
 
     private final AuthService authService;

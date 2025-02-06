@@ -25,6 +25,7 @@ public class JwtUtil {
 
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("role", UserRoles.getRole(user));
         return createToken(claims, user.getEmail());
     }
 
@@ -66,5 +67,9 @@ public class JwtUtil {
 
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
+    }
+
+    public String extractRole(String token) {
+        return extractClaim(token, claims -> claims.get("role", String.class));
     }
 }
