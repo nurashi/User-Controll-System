@@ -16,4 +16,31 @@ public class TaskStatus {
 
     @Column(name = "description")
     private String description;
+
+    public TaskStatus() {
+
+    }
+    public TaskStatus(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public Long getId() {
+        return id;
+    }
+    public String getName() {
+        return name;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
