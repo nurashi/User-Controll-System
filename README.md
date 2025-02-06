@@ -7,6 +7,14 @@
 This project created for "Object-Oriented Programming. | Khaimuldin Askar" course. Focused on controlling Users from Database which is Postgres...
 
 
+
+
+
+Resources for Interation 2:
+https://reflectoring.io/bean-validation-with-spring-boot/
+https://www.baeldung.com/swagger-2-documentation-for-spring-rest-api
+https://medium.com/@aedemirsen/spring-boot-global-exception-handler-842d7143cf2a
+
 ##  Required Tools Installation
 
 1. **Download and install Spring Boot**:
