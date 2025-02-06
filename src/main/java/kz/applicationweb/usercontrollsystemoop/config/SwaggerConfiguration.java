@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,15 +17,23 @@ import org.springframework.context.annotation.Configuration;
     bearerFormat = "JWT"
 )
 public class SwaggerConfiguration {
+
+    @Value("${swagger.title}")
+    private String title;
+    
+    @Value("${swagger.description}")
+    private String description;
+
+    @Value("${swagger.version}")
+    private String version;
     
     @Bean
     public OpenAPI userManagementOpenAPI() {
-        AppConfig config = AppConfig.getInstance();
         return new OpenAPI()
             .info(new Info()
-                .title(config.getConfig("swagger.title"))
-                .description(config.getConfig("swagger.description"))
-                .version(config.getConfig("swagger.version"))
+                .title(title)
+                .description(description)
+                .version(version)
             );
     }
 }
