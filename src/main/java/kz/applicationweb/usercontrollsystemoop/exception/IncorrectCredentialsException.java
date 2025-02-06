@@ -1,6 +1,6 @@
 package kz.applicationweb.usercontrollsystemoop.exception;
 
-public class IncorrectCredentialsException extends RuntimeException {
+public class IncorrectCredentialsException extends IllegalArgumentException {
     public IncorrectCredentialsException() {
         super("Incorrect credentials");
     }

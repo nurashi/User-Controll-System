@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import io.jsonwebtoken.IncorrectClaimException;
 import jakarta.transaction.TransactionScoped;
 import kz.applicationweb.usercontrollsystemoop.dto.request.AuthRequest;
 import kz.applicationweb.usercontrollsystemoop.dto.response.AuthResponse;
@@ -66,7 +65,7 @@ public class AuthServiceImpl implements AuthService {
             String token = jwtUtil.generateToken(user);
             return new AuthResponse(token);
         } else {
-            throw new IncorrectCredentialsException("Invalid credentials");
+            throw new IncorrectCredentialsException();
         }
     }
 }

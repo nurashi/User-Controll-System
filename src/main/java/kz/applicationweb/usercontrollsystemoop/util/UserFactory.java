@@ -3,6 +3,7 @@ package kz.applicationweb.usercontrollsystemoop.util;
 import org.springframework.stereotype.Component;
 
 import kz.applicationweb.usercontrollsystemoop.dto.request.RegisterRequest;
+import kz.applicationweb.usercontrollsystemoop.exception.InvalidRoleException;
 import kz.applicationweb.usercontrollsystemoop.model.user.Employee;
 import kz.applicationweb.usercontrollsystemoop.model.user.Student;
 import kz.applicationweb.usercontrollsystemoop.model.user.User;
@@ -11,19 +12,16 @@ import kz.applicationweb.usercontrollsystemoop.model.user.User;
 public class UserFactory {
 
     public User createUser(RegisterRequest request) {
+        User user = null;
         if ("student".equalsIgnoreCase(request.getRole())) {
-            Student student = new Student();
-            student.setUniversity(request.getUniversity());
-            student.setGpa(request.getGpa());
-            return student;
+            user = new Student();
         } else if ("employee".equalsIgnoreCase(request.getRole())) {
-            Employee employee = new Employee();
-            employee.setCompany(request.getCompany());
-            employee.setPosition(request.getPosition());
-            employee.setSalary(request.getSalary());
-            return employee;
+            user = new Employee();
         } else {
-            throw new IllegalArgumentException("Invalid role");
+            throw new InvalidRoleException("Invalid role");
         }
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+        return user;
     }
 }
