@@ -10,8 +10,19 @@ public class Student extends User {
     private Double gpa;
 
     // Getters and Setters
-    public String getUniversity() { return university; }
-    public void setUniversity(String university) { this.university = university; }
-    public Double getGpa() { return gpa; }
-    public void setGpa(Double gpa) { this.gpa = gpa; }
+    public String getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
+    }
+
+    public Double getGpa() {
+        return gpa;
+    }
+
+    public void setGpa(Double gpa) {
+        this.gpa = gpa;
+    }
 }

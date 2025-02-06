@@ -19,7 +19,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository employeeRepository,
-                              MappingUtils mappingUtils) {
+            MappingUtils mappingUtils) {
         this.employeeRepository = employeeRepository;
         this.mappingUtils = mappingUtils;
     }
@@ -34,9 +34,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee updateEmployee(Long id, CreateEmployeeRequest request) {
         Employee existingEmployee = employeeRepository.findById(id)
                 .orElseThrow();
-        
+
         mappingUtils.updateEmployeeFromRequest(request, existingEmployee);
-        
+
         return employeeRepository.save(existingEmployee);
     }
 

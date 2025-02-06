@@ -17,13 +17,13 @@ import kz.applicationweb.usercontrollsystemoop.service.impl.EmployeeServiceImpl;
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
-    
+
     private final EmployeeRepository employeeRepository;
     private final EmployeeServiceImpl employeeService;
 
     @Autowired
-    public EmployeeController(EmployeeRepository employeeRepository, 
-                             EmployeeServiceImpl employeeService) {
+    public EmployeeController(EmployeeRepository employeeRepository,
+            EmployeeServiceImpl employeeService) {
         this.employeeRepository = employeeRepository;
         this.employeeService = employeeService;
     }
@@ -50,8 +50,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public EmployeeResponse updateEmployee(@PathVariable Long id, 
-                                          @Valid @RequestBody CreateEmployeeRequest request) {
+    public EmployeeResponse updateEmployee(@PathVariable Long id,
+            @Valid @RequestBody CreateEmployeeRequest request) {
         Employee updatedEmployee = employeeService.updateEmployee(id, request);
         return new EmployeeResponse(updatedEmployee);
     }

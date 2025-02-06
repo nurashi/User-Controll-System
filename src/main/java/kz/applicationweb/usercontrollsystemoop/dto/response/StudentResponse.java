@@ -29,14 +29,43 @@ public class StudentResponse {
         this.gpa = student.getGpa();
     }
 
-    public Long getId() { return id; }
-    public String getName() { return name; }
-    public String getSurname() { return surname; }
-    public Integer getAge() { return age; }
-    public LocalDate getDateOfBirth() { return dateOfBirth; }
-    public String getEmail() { return email; }
-    public String getPhone() { return phone; }
-    public String getAddress() { return address; }
-    public String getUniversity() { return university; }
-    public Double getGpa() { return gpa; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getUniversity() {
+        return university;
+    }
+
+    public Double getGpa() {
+        return gpa;
+    }
 }

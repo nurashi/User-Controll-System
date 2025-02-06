@@ -8,7 +8,7 @@ import kz.applicationweb.usercontrollsystemoop.model.user.*;
 @Component
 public class MappingUtils {
 
-    //#region Employee
+    // #region Employee
     public Employee convertToEmployee(CreateEmployeeRequest request) {
         Employee employee = new Employee();
         updateEmployeeFromRequest(request, employee);
@@ -27,9 +27,9 @@ public class MappingUtils {
         employee.setPosition(request.getPosition());
         employee.setSalary(request.getSalary());
     }
-    //#endregion
+    // #endregion
 
-    //#region Student
+    // #region Student
     public Student convertToStudent(CreateStudentRequest request) {
         Student student = new Student();
         updateStudentFromRequest(request, student);
@@ -47,5 +47,5 @@ public class MappingUtils {
         student.setUniversity(request.getUniversity());
         student.setGpa(request.getGpa());
     }
-    //#endregion
+    // #endregion
 }

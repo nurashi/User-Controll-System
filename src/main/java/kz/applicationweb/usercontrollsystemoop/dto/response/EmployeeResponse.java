@@ -31,15 +31,47 @@ public class EmployeeResponse {
         this.salary = employee.getSalary();
     }
 
-    public Long getId() { return id; }
-    public String getName() { return name; }
-    public String getSurname() { return surname; }
-    public Integer getAge() { return age; }
-    public LocalDate getDateOfBirth() { return dateOfBirth; }
-    public String getEmail() { return email; }
-    public String getPhone() { return phone; }
-    public String getAddress() { return address; }
-    public String getCompany() { return company; }
-    public String getPosition() { return position; }
-    public Double getSalary() { return salary; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public Double getSalary() {
+        return salary;
+    }
 }

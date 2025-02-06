@@ -19,7 +19,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     public StudentServiceImpl(StudentRepository StudentRepository,
-                              MappingUtils mappingUtils) {
+            MappingUtils mappingUtils) {
         this.StudentRepository = StudentRepository;
         this.mappingUtils = mappingUtils;
     }
@@ -34,9 +34,9 @@ public class StudentServiceImpl implements StudentService {
     public Student updateStudent(Long id, CreateStudentRequest request) {
         Student existingStudent = StudentRepository.findById(id)
                 .orElseThrow();
-        
+
         mappingUtils.updateStudentFromRequest(request, existingStudent);
-        
+
         return StudentRepository.save(existingStudent);
     }
 

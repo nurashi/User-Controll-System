@@ -29,7 +29,8 @@ public class AuthServiceImpl implements AuthService {
     private final JwtUtil jwtUtil;
 
     @Autowired
-    public AuthServiceImpl(EmployeeRepository employeeRepository, StudentRepository studentRepository, AdminRepository adminRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+    public AuthServiceImpl(EmployeeRepository employeeRepository, StudentRepository studentRepository,
+            AdminRepository adminRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.employeeRepository = employeeRepository;
         this.studentRepository = studentRepository;
         this.adminRepository = adminRepository;
@@ -55,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
         if (user == null) {
             user = studentRepository.findByEmail(request.getEmail()).orElse(null);
         }
-        if(user == null) {
+        if (user == null) {
             user = adminRepository.findByEmail(request.getEmail()).orElse(null);
         }
         if (user == null) {

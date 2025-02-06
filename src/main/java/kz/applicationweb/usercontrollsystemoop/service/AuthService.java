@@ -6,5 +6,6 @@ import kz.applicationweb.usercontrollsystemoop.model.user.User;
 
 public interface AuthService {
     AuthResponse register(User user);
+
     AuthResponse login(AuthRequest request);
 }

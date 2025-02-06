@@ -17,13 +17,13 @@ import kz.applicationweb.usercontrollsystemoop.service.impl.StudentServiceImpl;
 @RestController
 @RequestMapping("/api/students")
 public class StudentController {
-    
+
     private final StudentRepository studentRepository;
     private final StudentServiceImpl studentService;
 
     @Autowired
-    public StudentController(StudentRepository studentRepository, 
-                             StudentServiceImpl studentService) {
+    public StudentController(StudentRepository studentRepository,
+            StudentServiceImpl studentService) {
         this.studentRepository = studentRepository;
         this.studentService = studentService;
     }
@@ -50,8 +50,8 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public StudentResponse updateStudent(@PathVariable Long id, 
-                                          @Valid @RequestBody CreateStudentRequest request) {
+    public StudentResponse updateStudent(@PathVariable Long id,
+            @Valid @RequestBody CreateStudentRequest request) {
         Student updatedStudent = studentService.updateStudent(id, request);
         return new StudentResponse(updatedStudent);
     }

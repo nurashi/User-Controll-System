@@ -19,7 +19,6 @@ public class DatabaseSeeder {
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
 
-
     public DatabaseSeeder(AdminRepository adminRepository, PasswordEncoder passwordEncoder) {
         this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;

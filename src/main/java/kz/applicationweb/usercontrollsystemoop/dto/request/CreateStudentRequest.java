@@ -56,7 +56,8 @@ public class CreateStudentRequest {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(@NotNull(message = "Date of birth is required") @Past(message = "Date of birth must be in the past") LocalDate dateOfBirth) {
+    public void setDateOfBirth(
+            @NotNull(message = "Date of birth is required") @Past(message = "Date of birth must be in the past") LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -64,7 +65,8 @@ public class CreateStudentRequest {
         return email;
     }
 
-    public void setEmail(@Email(message = "Email should be valid") @NotBlank(message = "Email is required") String email) {
+    public void setEmail(
+            @Email(message = "Email should be valid") @NotBlank(message = "Email is required") String email) {
         this.email = email;
     }
 
@@ -72,7 +74,8 @@ public class CreateStudentRequest {
         return password;
     }
 
-    public void setPassword(@NotBlank(message = "Password is required") @Size(min = 8, message = "Password must be at least 8 characters") String password) {
+    public void setPassword(
+            @NotBlank(message = "Password is required") @Size(min = 8, message = "Password must be at least 8 characters") String password) {
         this.password = password;
     }
 
@@ -80,7 +83,8 @@ public class CreateStudentRequest {
         return phone;
     }
 
-    public void setPhone(@Pattern(regexp = "^\\+?[0-9\\-\\s()]*$", message = "Invalid phone number format") String phone) {
+    public void setPhone(
+            @Pattern(regexp = "^\\+?[0-9\\-\\s()]*$", message = "Invalid phone number format") String phone) {
         this.phone = phone;
     }
 
