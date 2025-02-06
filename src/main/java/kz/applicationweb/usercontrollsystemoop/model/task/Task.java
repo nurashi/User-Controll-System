@@ -30,6 +30,10 @@ public class Task {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_id", insertable = false, updatable = false)
+    private TaskStatus status;
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
