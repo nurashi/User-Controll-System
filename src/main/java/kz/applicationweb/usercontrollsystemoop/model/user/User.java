@@ -12,6 +12,7 @@ public abstract class User {
     private String name;
     private String surname;
     private LocalDate dateOfBirth;
+    @Column(unique = true, nullable = false)
     private String email;
     private String password;
     private String phone;
