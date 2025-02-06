@@ -3,6 +3,7 @@ package kz.applicationweb.usercontrollsystemoop.util;
 import org.springframework.stereotype.Component;
 
 import kz.applicationweb.usercontrollsystemoop.dto.request.*;
+import kz.applicationweb.usercontrollsystemoop.model.task.Task;
 import kz.applicationweb.usercontrollsystemoop.model.user.*;
 
 @Component
@@ -46,6 +47,21 @@ public class MappingUtils {
         student.setAddress(request.getAddress());
         student.setUniversity(request.getUniversity());
         student.setGpa(request.getGpa());
+    }
+    // #endregion
+
+    // #region Task
+    public Task convertToTask(CreateTaskRequest request) {
+        Task task = new Task();
+        updateTaskFromRequest(request, task);
+        return task;
+    }
+
+    public void updateTaskFromRequest(CreateTaskRequest request, Task task) {
+        task.setTitle(request.getTitle());
+        task.setDescription(request.getDescription());
+        task.setEmployeeId(request.getEmployeeId());
+        task.setStatusId(request.getStatusId());
     }
     // #endregion
 }
