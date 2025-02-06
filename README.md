@@ -35,5 +35,6 @@ This project created for "Object-Oriented Programming. | Khaimuldin Askar" cours
    spring.datasource.password=your_password
 
 
+## Usage
 
-
+You can use application using any HTTP client or use `Swagger` at `/swagger-ui/index.html` 
