@@ -35,3 +35,9 @@ body {
     font-size: 3.5rem;
   }
 }
+
+li {
+  margin-left: 10px;
+  margin-right: 10px;
+  list-style-type: none;
+}

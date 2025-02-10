@@ -32,6 +32,12 @@ function getRole() {
   return tokenData.role;
 }
 
+function getUserId() {
+  const token = getCookie("token");
+  const tokenData = parseJwt(token);
+  return tokenData.id;
+}
+
 function setCookie(name, value, seconds) {
   const expires = new Date();
   expires.setTime(expires.getTime() + seconds * 1000);
@@ -67,7 +73,7 @@ function handleFetchError(response){
   }
   if (response.status === 403) {
     alert("You are forbidden to perform this action.");
-    logout();
+    window.location.href = "/";
     return true;
   }
   if(response.status >= 400 && response.status < 500){

@@ -5,14 +5,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function fetchTasks() {
   try {
-    const response = await fetch(`${API_BASE_URL}/tasks`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${getCookie("token")}`,
-      },
-    });
-
+    const role = getRole();
+    let response = null;
+    if (role === "admin") {
+      response = await fetch(`${API_BASE_URL}/tasks`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getCookie("token")}`,
+        },
+      });
+    } else if (role === "employee") {
+      const userId = getUserId();
+      response = await fetch(`${API_BASE_URL}/tasks/employee/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getCookie("token")}`,
+        },
+      });
+    } else {
+      window.location.href = "/";
+    }
     if (await handleFetchError(response)) {
       return;
     }
@@ -27,8 +41,8 @@ async function fetchTasks() {
 
 function displayTasks(tasks) {
   const addTasksButton = document.getElementById("add-new-task-button");
-  const role = getRole()
-  if(role === "admin"){
+  const role = getRole();
+  if (role === "admin") {
     addTasksButton.hidden = false;
   }
   const tasksContainer = document.getElementById("tasksList");
@@ -58,7 +72,7 @@ function displayTasks(tasks) {
                     <td>${task.id}</td>
                     <td>${task.title}</td>
                     <td>${task.description}</td>
-                    <td>${task.employeeName}</td>
+                    <td>${task.employeeFullName}</td>
                     <td>${task.statusName}</td>
                     <td>${new Date(task.createdAt).toLocaleString()}</td>
                     <td>${new Date(task.updatedAt).toLocaleString()}</td>
@@ -148,7 +162,7 @@ async function deleteTask(taskId) {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${getCookie("token")}`,
+        Authorization: `Bearer ${getCookie("token")}`,
       },
     });
 

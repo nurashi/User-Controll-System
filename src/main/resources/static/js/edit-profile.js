@@ -40,6 +40,7 @@ function populateEditForm(profile, role) {
   document.getElementById("age").value = profile.age || "";
   document.getElementById("dateOfBirth").value = profile.dateOfBirth || ""; // Ensure backend sends date in correct format for input[type=date]
   document.getElementById("email").value = profile.email || "";
+  document.getElementById("password").value = "";
   document.getElementById("phone").value = profile.phone || "";
   document.getElementById("address").value = profile.address || "";
 
@@ -58,7 +59,7 @@ async function updateProfile(event) {
 
   const formData = new FormData(event.target);
   const profileData = Object.fromEntries(formData.entries());
-  const userId = profileData.id;
+  const userId = getUserId();
   const role = getRole();
 
   let apiUrl;

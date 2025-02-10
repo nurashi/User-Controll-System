@@ -57,7 +57,7 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    @RequireRole({"admin", "employee"})
+    @RequireRole({"admin", "student"})
     public StudentResponse updateStudent(@PathVariable Long id,
             @Valid @RequestBody CreateStudentRequest request) {
         Student updatedStudent = studentService.updateStudent(id, request);
