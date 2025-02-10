@@ -1,22 +1,25 @@
 package kz.applicationweb.usercontrollsystemoop.controller;
 
-import java.util.List;
-import java.util.Optional;
+import kz.applicationweb.usercontrollsystemoop.dto.request.TaskRequest;
+import kz.applicationweb.usercontrollsystemoop.dto.response.TaskResponse;
+import kz.applicationweb.usercontrollsystemoop.repository.StudentRepository;
+import kz.applicationweb.usercontrollsystemoop.repository.TaskRepository;
+import kz.applicationweb.usercontrollsystemoop.security.RequireRole;
+import kz.applicationweb.usercontrollsystemoop.service.TaskService;
+import kz.applicationweb.usercontrollsystemoop.service.impl.StudentServiceImpl;
+import kz.applicationweb.usercontrollsystemoop.service.impl.TaskServiceImpl;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import kz.applicationweb.usercontrollsystemoop.dto.request.CreateTaskRequest;
-import kz.applicationweb.usercontrollsystemoop.dto.response.TaskResponse;
-import kz.applicationweb.usercontrollsystemoop.model.task.Task;
-import kz.applicationweb.usercontrollsystemoop.repository.TaskRepository;
-import kz.applicationweb.usercontrollsystemoop.security.RequireRole;
-import kz.applicationweb.usercontrollsystemoop.service.impl.TaskServiceImpl;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -24,60 +27,48 @@ import kz.applicationweb.usercontrollsystemoop.service.impl.TaskServiceImpl;
 @Tag(name = "Tasks")
 public class TaskController {
 
-    private final TaskRepository taskRepository;
     private final TaskServiceImpl taskService;
 
     @Autowired
-    public TaskController(TaskRepository taskRepository,
-            TaskServiceImpl taskService) {
-        this.taskRepository = taskRepository;
-        this.taskService = taskService;
-    }
-
-    @PostMapping
-    @ResponseStatus(code = HttpStatus.CREATED)
-    @RequireRole({"admin"})
-    public TaskResponse createTask(@Valid @RequestBody CreateTaskRequest request) {
-        Task Task = taskService.createTask(request);
-        return new TaskResponse(Task);
-    }
-
-    @GetMapping
-    public List<TaskResponse> getAllTasks() {
-        return taskRepository.findAllWithStatus()
-                .stream()
-                .map(TaskResponse::new)
-                .toList();
-    }
-
-    @GetMapping("/by-employee/{id}")
-    @RequireRole({"admin", "employee"})
-    public List<TaskResponse> getTasksByEmployee(@PathVariable Long id) {
-        return taskRepository.findByEmployeeIdWithStatus(id)
-                .stream()
-                .map(TaskResponse::new)
-                .toList();
+    public TaskController(TaskServiceImpl studentService) {
+        this.taskService = studentService;
     }
 
     @GetMapping("/{id}")
     @RequireRole({"admin"})
-    public TaskResponse getTaskById(@PathVariable Long id) {
-        Optional<Task> item = taskRepository.findById(id);
-        return item.map(TaskResponse::new).orElse(null);
+    public ResponseEntity<TaskResponse> getTaskById(@PathVariable Long id) {
+        return ResponseEntity.ok(taskService.getTaskById(id));
+    }
+
+    @GetMapping
+    @RequireRole({"admin"})
+    public ResponseEntity<List<TaskResponse>> getAllTasks() {
+        return ResponseEntity.ok(taskService.getAllTasks());
+    }
+
+    @PostMapping
+    @RequireRole({"admin"})
+    public ResponseEntity<TaskResponse> createTask(@Validated @RequestBody TaskRequest taskRequest) {
+        return new ResponseEntity<>(taskService.createTask(taskRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     @RequireRole({"admin"})
-    public TaskResponse updateTask(@PathVariable Long id,
-            @Valid @RequestBody CreateTaskRequest request) {
-        Task updatedTask = taskService.updateTask(id, request);
-        return new TaskResponse(updatedTask);
+    public ResponseEntity<TaskResponse> updateTask(
+            @PathVariable Long id,
+            @Validated @RequestBody TaskRequest taskRequest) {
+        return ResponseEntity.ok(taskService.updateTask(id, taskRequest));
     }
 
     @DeleteMapping("/{id}")
     @RequireRole({"admin"})
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void deleteTask(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/employee/{employeeId}")
+    public ResponseEntity<List<TaskResponse>> getTasksByEmployeeId(@PathVariable Long employeeId) {
+        return ResponseEntity.ok(taskService.getTasksByEmployeeId(employeeId));
     }
 }

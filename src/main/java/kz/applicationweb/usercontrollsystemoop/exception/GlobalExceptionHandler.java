@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler({ RuntimeException.class })
-    public ResponseEntity<Object> handleRuntimeException(RuntimeException exception) {
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Internal server error");
-    }
+    // @ExceptionHandler({ RuntimeException.class })
+    // public ResponseEntity<Object> handleRuntimeException(RuntimeException exception) {
+    //     return ResponseEntity
+    //             .status(HttpStatus.INTERNAL_SERVER_ERROR)
+    //             .body("Internal server error");
+    // }
 
     @ExceptionHandler({ IllegalArgumentException.class })
     public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException exception) {
