@@ -32,7 +32,9 @@ public class WebConfig implements WebMvcConfigurer {
             "/statuses", "statuses.html",
             "/tasks", "tasks.html",
             "/add-task", "add-task.html",
-            "/edit-task", "edit-task.html"
+            "/edit-task", "edit-task.html",
+            "/profile", "profile.html",
+            "/edit-profile", "edit-profile.html"
         );
         for (Map.Entry<String, String> entry : htmlRoutes.entrySet()) {
             registry.addViewController(entry.getKey()).setViewName(entry.getValue());
