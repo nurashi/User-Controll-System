@@ -2,13 +2,8 @@ package kz.applicationweb.usercontrollsystemoop.controller;
 
 import kz.applicationweb.usercontrollsystemoop.dto.request.TaskRequest;
 import kz.applicationweb.usercontrollsystemoop.dto.response.TaskResponse;
-import kz.applicationweb.usercontrollsystemoop.repository.StudentRepository;
-import kz.applicationweb.usercontrollsystemoop.repository.TaskRepository;
 import kz.applicationweb.usercontrollsystemoop.security.RequireRole;
-import kz.applicationweb.usercontrollsystemoop.service.TaskService;
-import kz.applicationweb.usercontrollsystemoop.service.impl.StudentServiceImpl;
 import kz.applicationweb.usercontrollsystemoop.service.impl.TaskServiceImpl;
-import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -58,7 +58,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    @RequireRole({"admin"})
+    @RequireRole({"admin", "employee"})
     public EmployeeResponse updateEmployee(@PathVariable Long id,
             @Valid @RequestBody CreateEmployeeRequest request) {
         Employee updatedEmployee = employeeService.updateEmployee(id, request);

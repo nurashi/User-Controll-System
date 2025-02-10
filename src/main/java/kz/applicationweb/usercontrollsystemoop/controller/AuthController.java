@@ -1,9 +1,12 @@
 package kz.applicationweb.usercontrollsystemoop.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import kz.applicationweb.usercontrollsystemoop.dto.request.AuthRequest;
@@ -37,5 +40,12 @@ public class AuthController {
     @PostMapping("/login")
     public AuthResponse login(@Valid @RequestBody AuthRequest request) {
         return authService.login(request);
+    }
+
+    @GetMapping("/me")
+    @SecurityRequirement(name = "Authorization")
+    public Map<String, String>  me(@RequestHeader("Authorization") String token) {
+        token = token.replace("Bearer ", "");
+        return authService.me(token);
     }
 }

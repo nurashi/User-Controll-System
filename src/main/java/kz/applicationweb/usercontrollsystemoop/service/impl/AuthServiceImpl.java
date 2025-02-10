@@ -1,5 +1,7 @@
 package kz.applicationweb.usercontrollsystemoop.service.impl;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import kz.applicationweb.usercontrollsystemoop.repository.EmployeeRepository;
 import kz.applicationweb.usercontrollsystemoop.repository.StudentRepository;
 import kz.applicationweb.usercontrollsystemoop.service.AuthService;
 import kz.applicationweb.usercontrollsystemoop.util.JwtUtil;
+import kz.applicationweb.usercontrollsystemoop.util.ReflectionUtils;
 
 @Service
 @TransactionScoped
@@ -68,5 +71,29 @@ public class AuthServiceImpl implements AuthService {
         } else {
             throw new IncorrectCredentialsException();
         }
+    }
+
+    @Override
+    public Map<String, String> me(String token) {
+        String role = jwtUtil.extractRole(token);
+        try {
+
+            if (role.equals("admin")) {
+                return ReflectionUtils
+                        .convertUsingReflection(adminRepository.findByEmail(jwtUtil.extractUsername(token))
+                                .orElseThrow(() -> new UserNotFoundException("User not found")));
+            } else if (role.equals("employee")) {
+                return ReflectionUtils
+                        .convertUsingReflection(employeeRepository.findByEmail(jwtUtil.extractUsername(token))
+                                .orElseThrow(() -> new UserNotFoundException("User not found")));
+            } else if (role.equals("student")) {
+                return ReflectionUtils
+                        .convertUsingReflection(studentRepository.findByEmail(jwtUtil.extractUsername(token))
+                                .orElseThrow(() -> new UserNotFoundException("User not found")));
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
