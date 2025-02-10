@@ -1,47 +1,97 @@
 package kz.applicationweb.usercontrollsystemoop.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import jakarta.transaction.Transactional;
-import kz.applicationweb.usercontrollsystemoop.dto.request.CreateTaskRequest;
+import kz.applicationweb.usercontrollsystemoop.dto.request.TaskRequest;
+import kz.applicationweb.usercontrollsystemoop.dto.response.TaskResponse;
 import kz.applicationweb.usercontrollsystemoop.model.task.Task;
 import kz.applicationweb.usercontrollsystemoop.repository.TaskRepository;
+import kz.applicationweb.usercontrollsystemoop.repository.EmployeeRepository;
 import kz.applicationweb.usercontrollsystemoop.service.TaskService;
-import kz.applicationweb.usercontrollsystemoop.util.MappingUtils;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 @Transactional
 public class TaskServiceImpl implements TaskService {
+
     private final TaskRepository taskRepository;
-    private final MappingUtils mappingUtils;
+    private final EmployeeRepository employeeRepository;
 
-    @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository, MappingUtils mappingUtils) {
-        this.taskRepository = taskRepository;
-        this.mappingUtils = mappingUtils;
+    @Override
+    public TaskResponse getTaskById(Long id) {
+        Task task = taskRepository.findByIdWithDetails(id)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+        return convertToResponseDto(task);
     }
 
     @Override
-    public Task createTask(CreateTaskRequest request) {
-        Task task = mappingUtils.convertToTask(request);
-        return taskRepository.save(task);
+    public List<TaskResponse> getAllTasks() {
+        return taskRepository.findAllWithDetails().stream()
+                .map(this::convertToResponseDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Task updateTask(Long id, CreateTaskRequest request) {
-        Task existingTask = taskRepository.findById(id)
-                .orElseThrow();
+    public TaskResponse createTask(TaskRequest requestDto) {
+        Task task = new Task();
+        updateTaskFromDto(task, requestDto);
+        Task savedTask = taskRepository.save(task);
+        return convertToResponseDto(savedTask);
+    }
 
-        mappingUtils.updateTaskFromRequest(request, existingTask);
-
-        return taskRepository.save(existingTask);
+    @Override
+    public TaskResponse updateTask(Long id, TaskRequest requestDto) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+        updateTaskFromDto(task, requestDto);
+        Task updatedTask = taskRepository.save(task);
+        return convertToResponseDto(updatedTask);
     }
 
     @Override
     public void deleteTask(Long id) {
-        Task Task = taskRepository.findById(id)
-                .orElseThrow();
-        taskRepository.delete(Task);
+        taskRepository.deleteById(id);
+    }
+
+    private void updateTaskFromDto(Task task, TaskRequest dto) {
+        task.setTitle(dto.getTitle());
+        task.setDescription(dto.getDescription());
+        task.setEmployeeId(dto.getEmployeeId());
+        task.setStatusId(dto.getStatusId());
+    }
+
+    private TaskResponse convertToResponseDto(Task task) {
+        TaskResponse dto = new TaskResponse();
+        dto.setId(task.getId());
+        dto.setTitle(task.getTitle());
+        dto.setDescription(task.getDescription());
+        dto.setEmployeeId(task.getEmployeeId());
+        dto.setStatusId(task.getStatusId());
+        dto.setCreatedAt(task.getCreatedAt());
+        dto.setUpdatedAt(task.getUpdatedAt());
+        
+        // Set status name if available
+        if (task.getStatus() != null) {
+            dto.setStatusName(task.getStatus().getName());
+        }
+        
+        // Get employee full name
+        employeeRepository.findById(task.getEmployeeId())
+                .ifPresent(employee -> 
+                    dto.setEmployeeFullName(employee.getName() + " " + employee.getSurname())
+                );
+        
+        return dto;
+    }
+
+    @Override
+    public List<TaskResponse> getTasksByEmployeeId(Long employeeId) {
+        return taskRepository.findAllByEmployeeIdWithDetails(employeeId).stream()
+                .map(this::convertToResponseDto)
+                .collect(Collectors.toList());
     }
 }

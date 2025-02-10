@@ -51,13 +51,13 @@ public class MappingUtils {
     // #endregion
 
     // #region Task
-    public Task convertToTask(CreateTaskRequest request) {
+    public Task convertToTask(TaskRequest request) {
         Task task = new Task();
         updateTaskFromRequest(request, task);
         return task;
     }
 
-    public void updateTaskFromRequest(CreateTaskRequest request, Task task) {
+    public void updateTaskFromRequest(TaskRequest request, Task task) {
         task.setTitle(request.getTitle());
         task.setDescription(request.getDescription());
         task.setEmployeeId(request.getEmployeeId());
