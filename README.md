@@ -2,7 +2,8 @@
 
 [![CodeQL](https://github.com/nurashi/User-Management-System/actions/workflows/codeql.yml/badge.svg)](https://github.com/nurashi/User-Management-System/actions/workflows/codeql.yml)
 
-![image](https://github.com/user-attachments/assets/0971f48a-da43-4d3d-be0f-cdbac7ebdd88)
+![image](https://github.com/user-attachments/assets/9493647e-5336-4ab9-b7d5-5a020944a5fb)
+
 
 This project created for "Object-Oriented Programming. | Khaimuldin Askar" course. Focused on controlling Users from Database which is Postgres...
 
